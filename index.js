@@ -3,29 +3,16 @@ const express = require('express')
 const morgan = require('morgan')
 
 const {connection} = require('./src/db')
-
+const {router} = require('./routers/products')
 
 const app = express()
-
+// Middlewares
 app.use(express.json())
 app.use(morgan('tiny'))
 
-
+// Routes
 const api = process.env.API_URL
-
-app.get(`${api}/products` , (req,res) => {
-    const products = {
-        id : 1,
-        name : 'hair dryer',
-        image : 'some url'
-    }
-    res.send({products})
-})
-
-app.post(`${api}/products` , (req,res) => {
-    const newProduct = req.body
-    res.send({newProduct})
-})
+app.use(`${api}/products` , router)
 
 app.listen(3000 , async() => {
     try{
