@@ -1,12 +1,16 @@
 require('dotenv').config();
 const express = require('express')
 const morgan = require('morgan')
+const cors = require('cors')
+
 
 const {connection} = require('./src/db')
 const {router} = require('./routers/products')
 
 const app = express()
 // Middlewares
+app.use(cors())
+app.options('*' ,cors())
 app.use(express.json())
 app.use(morgan('tiny'))
 
