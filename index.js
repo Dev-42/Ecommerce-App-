@@ -1,6 +1,9 @@
+require('dotenv').config();
 const express = require('express')
 const morgan = require('morgan')
-require('dotenv').config();
+
+const {connection} = require('./src/db')
+
 
 const app = express()
 
@@ -24,6 +27,13 @@ app.post(`${api}/products` , (req,res) => {
     res.send({newProduct})
 })
 
-app.listen(3000 , () => {
+app.listen(3000 , async() => {
+    try{
+        await connection
+        console.log("Connected to DB succesfully")
+    }catch(e){
+        console.log(e)
+        console.log("Connection to database failed")
+    }
     console.log('Server started successfully in port 3000')
 })
