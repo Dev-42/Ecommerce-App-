@@ -136,7 +136,7 @@ router.delete('/:id' , async(req,res) => {
 })
 
 // Let's generate statistics
-// Counting the number of documents in my products data
+// 1)Counting the number of documents in my products data
 
 router.get('/get/count' , async(req,res) => {
     try{
@@ -150,6 +150,41 @@ router.get('/get/count' , async(req,res) => {
         console.log(e)
         console.log('Internal server error in counting documents')
         res.status(500).send({status : false , message : 'Internal server error in counting documents'})
+    }
+})
+
+// 2) Featured API - Now let's gonna display the featured items on our homepage
+router.get('/get/featured' , async(req,res) => {
+    try{
+        const featureProducts = await ProductModel.find({isFeatured : true})
+        if(!featureProducts){
+            res.status(500).send({status : true , message : 'There are no featured products in the DB'})
+        }
+        else{
+            res.status(200).send({featureProducts})
+        }
+    }catch(e){
+        console.log(e)
+        console.log('Internal server error in featuring documents')
+        res.status(500).send({status : false , message : 'Internal server error in featuring documents'})
+    }
+})
+
+// 3 Featuring the products depending upon the user count
+
+router.get('/get/featured/:count' , async(req,res) => {
+    const count = req.params.count
+    try{
+        const countFeatured = await ProductModel.find({isFeatured: true}).limit(+count)
+        if(countFeatured){
+            res.status(200).send({countFeatured})
+        }else{
+            res.send({status : false , message : 'User did not provide featured product count'})
+        }
+    }catch(e){
+        console.log(e)
+        console.log("Error in calculating user count of featureing documents")
+        res.status(500).send({status : false , message : 'Internal server error in featuring the count of documents'})
     }
 })
 
