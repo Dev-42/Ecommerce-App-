@@ -54,6 +54,32 @@ router.post('/' , async(req,res) => {
     }
 
 })
+
+// Update 
+
+router.put('/:id' , async(req,res) => {
+    const {name , icon , color} = req.body
+    try{
+        const category = await CategoryModel.findByIdAndUpdate(req.params.id , 
+            {
+                name,
+                icon,
+                color
+            }
+        )
+            if(category){
+                res.send({category})
+            }else{
+                res.status(400).send({status : false , message : 'Update cannot be done as ID cannot be found'})
+            }
+    }
+    catch(e){
+        console.log(e)
+        console.log("Server error")
+        res.status(404).send({status : false , message : 'Internal server error due to which update cannot be done for a specific ID'})
+    }
+})
+
 router.delete('/:id' , async(req,res) => {
     try{
         const catDelete = await CategoryModel.findByIdAndDelete(req.params.id)
