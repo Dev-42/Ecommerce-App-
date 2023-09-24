@@ -5,7 +5,10 @@ const cors = require('cors')
 
 
 const {connection} = require('./src/db')
-const {router} = require('./routers/products')
+
+// Routes
+const productsRoutes = require('./routers/products')
+const categoriesRoutes = require('./routers/categories')
 
 const app = express()
 // Middlewares
@@ -16,7 +19,8 @@ app.use(morgan('tiny'))
 
 // Routes
 const api = process.env.API_URL
-app.use(`${api}/products` , router)
+app.use(`${api}/products` , productsRoutes)
+app.use(`${api}/categories` , categoriesRoutes)
 
 app.listen(3000 , async() => {
     try{
