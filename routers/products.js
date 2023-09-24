@@ -6,8 +6,14 @@ const {ProductModel} = require('../Models/Products.model')
 const {CategoryModel} = require('../Models/Category.model')
 
 router.get(`/` , async(req,res) => {
+    let filter = {}
+
+    if(req.query.categories){
+        filter = {categories : req.query.categories.split(',')}
+    }
+
     try{
-        const productList = await ProductModel.find().select('name description -_id')
+        const productList = await ProductModel.find(filter).select('name description -_id')
         res.status(201).send({productList})
     }catch(e){
         console.log(e)
