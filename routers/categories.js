@@ -65,7 +65,8 @@ router.put('/:id' , async(req,res) => {
                 name,
                 icon,
                 color
-            }
+            },
+            {new : true}
         )
             if(category){
                 res.send({category})
