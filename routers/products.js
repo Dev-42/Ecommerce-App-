@@ -13,7 +13,7 @@ router.get(`/` , async(req,res) => {
     }
 
     try{
-        const productList = await ProductModel.find(filter).select('name description -_id')
+        const productList = await ProductModel.find(filter).select('name description')
         res.status(201).send({productList})
     }catch(e){
         console.log(e)

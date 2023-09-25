@@ -52,6 +52,14 @@ const ProductSchema = mongoose.Schema({
 
 })
 
+// Creating virtuals to replace _id with id
+ProductSchema.virtual('id').get(function() {
+    return this._id.toHexString()
+})
+ProductSchema.set('toJSON' , {
+    virtuals : true,
+})
+
 const ProductModel = mongoose.model('Product' , ProductSchema)
 
 module.exports = {ProductModel}
