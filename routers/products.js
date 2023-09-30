@@ -47,7 +47,7 @@ router.post(`/` , async(req,res) => {
 
     const categoryUser = await CategoryModel.findById(req.body.category)
     if(!categoryUser){
-        return res.status(400).send({status : false , message : 'Invalid Category'})
+        return res.status(400).send({status : false , message : 'Invalid Category product cannot be posted'})
     }
 
     const {name,description,richDescription,image,brand,price,category,countInStock,rating,numReveiws,isFeatured} = req.body

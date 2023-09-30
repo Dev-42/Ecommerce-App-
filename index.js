@@ -9,6 +9,8 @@ const {connection} = require('./src/db')
 // Routes
 const productsRoutes = require('./routers/products')
 const categoriesRoutes = require('./routers/categories')
+// const userRoutes = require('./routers/users')
+const userRoutes = require('./routers/users')
 
 const app = express()
 // Middlewares
@@ -21,6 +23,7 @@ app.use(morgan('tiny'))
 const api = process.env.API_URL
 app.use(`${api}/products` , productsRoutes)
 app.use(`${api}/categories` , categoriesRoutes)
+app.use(`${api}/users` , userRoutes)
 
 app.listen(3000 , async() => {
     try{
