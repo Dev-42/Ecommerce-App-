@@ -24,8 +24,8 @@ app.use(morgan('tiny'));
 // Routes
 const api = process.env.API_URL;
 app.use(`${api}/products`, authorize, productsRoutes);
-app.use(`${api}/categories`, categoriesRoutes);
-app.use(`${api}/users`, userRoutes);
+app.use(`${api}/categories`, authorize ,categoriesRoutes);
+app.use(`${api}/users`, authorize , userRoutes);
 
 app.listen(3000, async () => {
     try {
